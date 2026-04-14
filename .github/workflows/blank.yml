@@ -1,36 +1,533 @@
-# This is a basic workflow to help you get started with Actions
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>巴山枇杷·乡约天宫村 | 摄影短视频大赛 - 乡村振兴主题创作</title>
+    <!-- SEO 优化 -->
+    <meta name="description" content="四川巴中天宫村千亩枇杷摄影/短视频大赛！专业组1000元大奖，村民随手拍赢米油，抖音带话题#巴山枇杷乡约天宫村 即可参赛。记录乡土之美，助力乡村振兴。">
+    <meta name="keywords" content="巴山枇杷,天宫村,摄影大赛,短视频大赛,乡村振兴,枇杷节,巴中旅游">
+    <meta name="author" content="天宫村村民委员会">
+    <meta name="robots" content="index, follow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-name: CI
+        body {
+            background-color: #fef7e8;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #2d2a24;
+            line-height: 1.5;
+        }
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+        .page {
+            max-width: 640px;
+            margin: 0 auto;
+            background-color: #fffef7;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            overflow-x: hidden;
+        }
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+        /* 防止长单词/标签溢出 */
+        .tag, .group-desc, .card-content p, .glance-text p {
+            word-break: break-word;
+        }
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+        .hero {
+            background: linear-gradient(135deg, #f9b42c 0%, #fd8e2e 100%);
+            padding: 32px 20px 40px;
+            text-align: center;
+            position: relative;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            color: white;
+        }
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+        .hero-badge {
+            background: rgba(255,255,240,0.25);
+            backdrop-filter: blur(2px);
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            border: 0.5px solid rgba(255,215,150,0.6);
+        }
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+        .hero h1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            font-weight: 800;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        .hero-sub {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .hero-date {
+            background: #2d2a24;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 40px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffeaac;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            background: white;
+            margin: 20px 16px;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            padding: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .card-header {
+            padding: 18px 20px 8px 20px;
+            border-left: 6px solid #fd8e2e;
+            background: #fffcf5;
+        }
+
+        .card-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #b45f1b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header h2 span {
+            font-size: 1.8rem;
+        }
+
+        .card-content {
+            padding: 8px 20px 24px;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            background: #fdebd0;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #c25d1a;
+            word-break: break-word;
+        }
+
+        .group-item {
+            background: #fef7ef;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #ffe0b5;
+        }
+
+        .group-title {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #bd6b1e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 优化标题层级 */
+        .group-title h3 {
+            font-size: inherit;
+            font-weight: inherit;
+            margin: 0;
+        }
+
+        .group-desc {
+            font-size: 0.9rem;
+            color: #4d3a28;
+            margin-bottom: 12px;
+        }
+
+        .prize-badge {
+            background: #f1e2c9;
+            border-radius: 20px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .btn-block {
+            display: block;
+            background: #fd8e2e;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            margin: 24px 16px 16px;
+            transition: 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .btn-block:hover {
+            background: #e57a1a;
+            transform: scale(0.98);
+        }
+
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, #f9b42c, #ffdd99);
+            width: 80px;
+            margin: 8px 0 16px;
+            border-radius: 4px;
+        }
+
+        .footer-note {
+            background: #faf3e8;
+            text-align: center;
+            padding: 28px 20px 32px;
+            font-size: 0.8rem;
+            color: #7a5a3a;
+            border-top: 1px solid #ffddb0;
+            margin-top: 20px;
+        }
+
+        .copyright {
+            font-size: 0.7rem;
+            margin-top: 12px;
+            color: #b48c54;
+        }
+
+        .highlight-box {
+            background: #fef1e2;
+            border-radius: 24px;
+            padding: 16px 18px;
+            margin: 16px;
+        }
+
+        .glance-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 4px;
+        }
+        .glance-item {
+            background: #fff7ef;
+            border-radius: 24px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid #ffe0b5;
+        }
+        .glance-icon {
+            font-size: 2.2rem;
+            min-width: 52px;
+            text-align: center;
+        }
+        .glance-text h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #bc6318;
+            margin-bottom: 4px;
+        }
+        .glance-text p {
+            font-size: 0.85rem;
+            color: #5a4230;
+            line-height: 1.35;
+        }
+        /* 二维码占位说明 */
+        .qrcode-placeholder {
+            background: #f0e7da;
+            border-radius: 16px;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #946f45;
+            margin-top: 12px;
+            border: 1px dashed #d9b48b;
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .card-header h2 {
+                font-size: 1.4rem;
+            }
+            .glance-item {
+                padding: 12px;
+            }
+            .glance-icon {
+                font-size: 1.8rem;
+                min-width: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <!-- 英雄区 -->
+    <div class="hero">
+        <div class="hero-badge">📸 全城热拍 · 乡村振兴</div>
+        <h1>“巴山枇杷·乡约天宫村”</h1>
+        <div class="hero-sub">乡村摄影、短视频大赛</div>
+        <div class="hero-date">📅 2026.4.10 – 2026.5.10</div>
+        <div style="margin-top: 20px; font-size: 0.85rem;">用镜头记录甜蜜 · 让世界看见乡土</div>
+    </div>
+
+    <!-- 大赛亮点 -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>✨</span> 为什么你一定要参加？</h2>
+        </div>
+        <div class="card-content">
+            <div class="glance-grid">
+                <div class="glance-item">
+                    <div class="glance-icon">🏆</div>
+                    <div class="glance-text">
+                        <h4>万元奖金 + 实物大奖</h4>
+                        <p>专业组金镜头奖1000元+荣誉村民礼遇；村民专属“村里人·村里事”奖200元+米油，更有参与即送洗衣粉/枇杷，人人有奖！</p>
+                    </div>
+                </div>
+                <div class="glance-item">
+                    <div class="glance-icon">📱</div>
+                    <div class="glance-text">
+                        <h4>全民流量狂欢 · 短视频赛道</h4>
+                        <p>抖音/视频号带话题 #巴山枇杷乡约天宫村 即可参赛，点赞量直接折算分数，轻松冲刺“最火人气奖”！</p>
+                    </div>
+                </div>
+                <div class="glance-item">
+                    <div class="glance-icon">🌾</div>
+                    <div class="glance-text">
+                        <h4>村民特别通道 · 零门槛拿奖</h4>
+                        <p>不要求画质、不用剪辑，村干部入户协助拍摄，提交就送礼品！大喇叭+集体拍摄日，让每一位乡亲都能赢回米面油。</p>
+                    </div>
+                </div>
+                <div class="glance-item">
+                    <div class="glance-icon">🍊</div>
+                    <div class="glance-text">
+                        <h4>千亩枇杷实景 · 创作即大片</h4>
+                        <p>专业组免票入园，最佳拍摄点+汉服模特+集中采摘场景，随手一拍都是乡村振兴最美画卷。</p>
+                    </div>
+                </div>
+                <div class="glance-item">
+                    <div class="glance-icon">📢</div>
+                    <div class="glance-text">
+                        <h4>官方流量加持 · 作品全平台展示</h4>
+                        <p>获奖作品用于天宫村公益宣传册、户外广告及政府汇报，让你的镜头成为巴山枇杷的“金名片”。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 三大组别 + 奖项 (使用 h3 优化层级) -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>📷</span> 三大组别 · 同台竞秀</h2>
+        </div>
+        <div class="card-content">
+            <div class="group-item">
+                <div class="group-title"><h3>🎥 专业组</h3></div>
+                <div class="group-desc">省/市/县摄协会员、职业摄影师、发烧友 · 单反/微单/无人机 · 展现乡村美学</div>
+                <div><span class="tag">🏅 金镜头奖1名 1000元+荣誉村民+枇杷礼盒</span> <span class="tag">🥈 银镜头奖2名 500元+枇杷礼盒</span> <span class="tag">🏅 优秀奖10名 油米+枇杷礼盒+采摘券</span></div>
+            </div>
+            <div class="group-item">
+                <div class="group-title"><h3>📱 业余组 · 游客/大众</h3></div>
+                <div class="group-desc">手机短视频/照片，抖音/快手/视频号发布须带话题 <strong>#巴山枇杷乡约天宫村</strong> 并 @村官方账号 + 定位天宫村</div>
+                <div><span class="tag">🔥 最火人气奖3名 枇杷礼盒+大米/食用油</span> <span class="tag">📖 乡土故事奖3名 枇杷礼盒</span></div>
+                <div style="font-size:0.75rem; margin-top: 8px;">评选标准：专家评分(50%) + 点赞/转发量(50%)</div>
+            </div>
+            <div class="group-item" style="background:#f7f0e2; border-color:#f3c58b;">
+                <div class="group-title"><h3>🌾 村民特别通道 · 专属福利</h3></div>
+                <div class="group-desc">本村户籍或常住村民，手机随手拍、原始照片/短视频均可，无需剪辑，交给村小组长或发村微信群，村委统一上传！</div>
+                <div><span class="tag">🏅 “村里人·村里事”特别奖10名 200元+大米/食用油</span> <span class="tag">🎁 参与即奖（不限名额） 洗衣粉1袋 或 枇杷2斤</span></div>
+                <div class="prize-badge">📢 大喇叭广播 + 入户动员 + 集体拍摄日（村干部协助拍照） 确保人人会拍，拍就有奖！</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创作主题与真实性要求 (包含举报细则) -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>🍊</span> 创作主题 · 必须围绕枇杷与乡土</h2>
+        </div>
+        <div class="card-content">
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div style="flex:1; background:#fff2e4; border-radius: 16px; padding: 12px;"><strong>🍃 物产之美</strong><br>枇杷挂枝、晶莹剔透、采摘特写</div>
+                <div style="flex:1; background:#fff2e4; border-radius: 16px; padding: 12px;"><strong>👩‍🌾 劳作之美</strong><br>修剪、套袋、挑担、分拣交易</div>
+                <div style="flex:1; background:#fff2e4; border-radius: 16px; padding: 12px;"><strong>🏡 生活之美</strong><br>孩童吃枇杷、全家采摘、枇杷膏制作、老屋枇杷树</div>
+            </div>
+            <div style="background:#fff0df; border-radius: 20px; padding: 14px; margin-top: 8px;">
+                <div style="font-weight:700;">⚠️ 内容真实性“一票否决”</div>
+                <ul style="margin-left: 20px; margin-top: 8px; font-size:0.85rem;">
+                    <li>所有作品必须在本村行政区域内拍摄，表现对象为本村枇杷或乡土特产。</li>
+                    <li>初审由熟悉村情的村民代表担任“真实性审核员”，复审将核实拍摄地点。</li>
+                    <li>使用外地素材、AI生成等冒充者取消资格并全平台通报，已领奖须退回。</li>
+                    <li>设立诚信监督热线，举报查实奖励50元或枇杷5斤。 <strong>（举报需提供原始文件或清晰线索，经村委核实后发放奖励）</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 时间流程 & 评审机制 -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>📆</span> 关键时间轴</h2>
+        </div>
+        <div class="card-content">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div><span class="tag" style="background:#fdcb8a;">📸 作品征集</span> 2026.4.10 - 5.10（涵盖枇杷由青转黄至采摘结束）</div>
+                <div><span class="tag" style="background:#fdcb8a;">👩‍⚖️ 专家评审+网络投票</span> 2026.5.10 - 5.15</div>
+                <div><span class="tag" style="background:#fdcb8a;">🏆 颁奖仪式</span> 2026.5.15（枇杷采摘节，天宫村文化广场）</div>
+                <div><span class="tag" style="background:#fdcb8a;">📢 集体拍摄日</span> 4月22日（周六上午）村干部协助全村一起拍</div>
+            </div>
+            <div class="divider"></div>
+            <div><strong>评审机制</strong><br>
+            专业组：主题契合40% + 构图美感30% + 创意性30%<br>
+            业余组：专家打分50% + 点赞/转发量50%（以该话题最高点赞为基准折算）<br>
+            村民通道：只要内容真实反映本村，即有机会获得“村里人·村里事”奖。
+            </div>
+        </div>
+    </div>
+
+    <!-- 配套引流 增加二维码占位 -->
+    <div class="highlight-box">
+        <div style="font-weight:800; font-size:1.2rem; margin-bottom: 8px;">🎬 网红级引流 · 免费创作福利</div>
+        <ul style="margin-left: 18px; margin-top: 6px;">
+            <li>📷 凭市级以上摄影协会证件，免门票进入核心枇杷园创作</li>
+            <li>👘 招募汉服/民族服装村民做“最美模特”，周六黄金拍摄时段（9-11点）组织集中采摘场景</li>
+            <li>📍 设立3处“最佳拍摄点”木质打卡路牌，出片率100%</li>
+            <li>🎤 村书记拍摄喊话短视频预热：“大师们快来村里吃枇杷！”</li>
+        </ul>
+        <!-- 二维码预留区 -->
+        <div class="qrcode-placeholder">
+            📍 最佳拍摄点电子地图 &nbsp;|&nbsp; 👘 汉服模特招募群<br>
+            （此处可放置二维码图片，请联系村委获取真实二维码）
+        </div>
+    </div>
+
+    <!-- 参赛要求细则 -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>📌</span> 参赛要求与发布规范</h2>
+        </div>
+        <div class="card-content">
+            <p><strong>📷 专业组（照片类）</strong><br>JPG格式不小于5MB，每人限5幅（组照≤6张），允许适度后期但不得合成。</p>
+            <p><strong>📱 业余组（短视频类）</strong><br>时长15-60秒，发布抖音/快手/视频号，必须带话题 <strong>#巴山枇杷乡约天宫村</strong> 并 @村官方账号 + 定位“天宫村”。</p>
+            <p><strong>🌾 村民特别通道</strong><br>零门槛，原始照片或未经精修短视频皆可，提交至村小组长或发至村微信群，由村委统一上传参赛，无需自行发布。</p>
+            <p><strong>⚠️ 版权与诚信</strong><br>作品原创，获奖作品授权村委用于乡村振兴公益宣传（署名权不变）；非本村素材冒用者取消资格并公示。</p>
+        </div>
+    </div>
+
+    <!-- 村民动员细节 -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>📣</span> 村民动员 · 人人有礼</h2>
+        </div>
+        <div class="card-content">
+            <div class="group-item" style="margin-bottom: 0;">
+                <div>✅ <strong>极低门槛</strong>：“拍清楚枇杷/特产即可”，无需加话题，交给村干部统一上传。<br>
+                ✅ <strong>专属奖项</strong>：10名特别奖（200元+米/油）+ 参与即送洗衣粉或枇杷2斤。<br>
+                ✅ <strong>大喇叭+入户动员</strong>：村干部分片包户，手把手教老年人按快门。<br>
+                ✅ <strong>集体拍摄日</strong>：村干部在枇杷园集中帮拍，确保每位村民都有作品参赛。<br>
+                ✅ 村务公开栏大字海报 + 网格员入户，火热氛围拉满！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 奖项汇总 -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>🎁</span> 重磅奖项一览</h2>
+        </div>
+        <div class="card-content">
+            <table style="width:100%; border-collapse: collapse; font-size:0.85rem;">
+                <tr style="border-bottom:1px solid #ffe0b5;"><td style="padding:6px 0;">专业组 金镜头奖<td style="font-weight:bold;">1000元+荣誉村民+枇杷礼盒</td></tr>
+                <tr style="border-bottom:1px solid #ffe0b5;"><td style="padding:6px 0;">专业组 银镜头奖<td>500元+枇杷礼盒</td></tr>
+                <tr style="border-bottom:1px solid #ffe0b5;"><td style="padding:6px 0;">专业组 优秀奖(10名)<td>油米+枇杷礼盒+采摘券2张</td></tr>
+                <tr style="border-bottom:1px solid #ffe0b5;"><td style="padding:6px 0;">村民·村里人事奖(10名)<td>大米1袋/食用油1桶+200元</td></tr>
+                <tr style="border-bottom:1px solid #ffe0b5;"><td style="padding:6px 0;">村民·参与奖<td>洗衣粉1袋 或 枇杷2斤(不限名额)</td></tr>
+                <tr style="border-bottom:1px solid #ffe0b5;"><td style="padding:6px 0;">业余组 最火人气奖(3名)<td>枇杷礼盒+大米/食用油</td></tr>
+                <tr><td style="padding:6px 0;">业余组 乡土故事奖(3名)<td>枇杷礼盒</td></tr>
+            </table>
+            <div style="margin-top: 16px; background:#f9e6d4; border-radius: 16px; padding: 10px; text-align:center; font-size:0.8rem;">✨ 所有获奖作品均有机会登上官方宣传册、户外广告，为乡村振兴助力 ✨</div>
+        </div>
+    </div>
+
+    <!-- 参与方式咨询 -->
+    <div class="card">
+        <div class="card-header">
+            <h2><span>📞</span> 如何参与 & 咨询</h2>
+        </div>
+        <div class="card-content">
+            <p><strong>专业组/业余组（游客）</strong>：按作品要求将照片/视频发布至指定平台（抖音/视频号等）带话题，或投稿至官方邮箱（照片类可发送至天宫村指定邮箱：<strong>tiangongcun@bazhong.com</strong> 并附上个人信息）。</p>
+            <p><strong>村民通道</strong>：直接交给村民小组长，或发送至村微信群、村委会官方微信号（可联系村干部获取）。</p>
+            <p><strong>咨询电话</strong>：村委办公室 0827-XXXXXXX ｜ 监督热线（村支书） 138XXXXXXX</p>
+            <div class="tag-group" style="margin-top: 12px;">
+                <span class="tag">📍 地点：四川省巴中市巴州区天宫村</span>
+                <span class="tag">🌐 公众号：天宫村乡村振兴</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 社交文案示例 -->
+    <div class="highlight-box" style="background:#ffe6cd; margin-bottom: 12px;">
+        <div style="font-weight:800;">🔥 一键复制 · 朋友圈/群聊 推广文案</div>
+        <div style="background:#fff7ef; border-radius: 20px; padding: 14px; margin-top: 12px; font-size:0.85rem; border:1px solid #f6cf9e;">
+            📸 <strong>快门一按，大奖两千！天宫村千亩枇杷熟了，就缺一个会拍照的你！</strong><br>
+            这里有金灿灿的果子，淳朴的笑脸，还有满满的乡愁。无论是专业长枪短炮，还是手机随手拍，都有大奖等你拿！<br>
+            ⏰时间：4月10日-5月10日 &nbsp;&nbsp;📍地点：天宫村<br>
+            村民随手拍也能赢米油！详情点击海报/链接。<br>
+            #巴山枇杷乡约天宫村
+        </div>
+    </div>
+
+    <!-- 隐私与版权说明 (新增) -->
+    <div class="card" style="margin-bottom: 0;">
+        <div class="card-header">
+            <h2><span>🔒</span> 隐私与版权说明</h2>
+        </div>
+        <div class="card-content">
+            <p style="font-size:0.75rem; color:#5f4c34;">1. 投稿作品视为同意组委会在乡村振兴公益宣传中使用（署名权归作者），未获奖作品若商用将另行取得授权。<br>
+            2. 个人信息仅用于评奖及联系，不对外公开。如有疑问请联系村委。<br>
+            3. 举报及诚信监督：需提供真实证据，恶意举报将追究责任。</p>
+        </div>
+    </div>
+
+    <!-- 底部版权 -->
+    <div class="footer-note">
+        <div>主办：天宫村村民委员会 &nbsp;|&nbsp; 协办：巴州区摄影家协会</div>
+        <div>活动最终解释权归天宫村枇杷节组委会所有。</div>
+        <div class="copyright">© 2026 巴山枇杷·乡约天宫村 | 乡村振兴 人人参与</div>
+    </div>
+
+    <!-- 立即参与按钮 (外链示例，可替换为真实表单/微信群链接) -->
+    <a href="javascript:void(0);" onclick="alert('请替换为真实报名链接或微信群二维码，例如：https://forms.example.com/loquat2026')" style="display: inline-block; text-decoration: none;" class="btn-block">📷 立即参与大赛 · 赢大奖</a>
+    <div style="height: 10px;"></div>
+</div>
+</body>
+</html>
